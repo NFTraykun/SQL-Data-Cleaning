@@ -1,4 +1,4 @@
---Convert sale date to consistent format of MM/DD/YYYY 
+-- Convert SaleDate to the consistent format of MM/DD/YYYY 
 
 SELECT
   FORMAT_DATE('%m/%d/%Y', SaleDate) AS SaleDate_MMDDYYYY
@@ -6,9 +6,9 @@ FROM
   traykun-data-analyst-project-1.Housing.NashvilleHousing
 
 
---Populate the Property Address data using the ParcelID
---(1st Query will find the null values, the 2nd will update them, if you run the 1st after the 2nd it will return nothing)
---1st Query
+-- Populate the Property Address data using the ParcelID
+-- (1st Query will find the null values, the 2nd will update them, if you run the 1st after the 2nd it will return nothing)
+-- 1st Query
 SELECT
   fill_address1.ParcelID,
   fill_address1.PropertyAddress,
@@ -26,7 +26,7 @@ AND
 WHERE
   fill_address1.PropertyAddress is null
 
---2nd Query
+-- 2nd Query
 UPDATE
   fill_address1
 SET
@@ -44,7 +44,7 @@ WHERE
 
 
 
---Break down the Address into Street Address and City and update it in the table
+-- Break down the Address into Street Address and City and update it in the table
 
 SELECT
   PropertyAddress,
@@ -53,15 +53,15 @@ SELECT
 FROM
   traykun-data-analyst-project-1.Housing.NashvilleHousing
 
---Update this in the table
---for street address
+-- Update this in the table
+-- For street address
 UPDATE
   traykun-data-analyst-project-1.Housing.NashvilleHousing
 SET
   PropertySplitAddress = SUBSTR(PropertyAddress, 1, INSTR(PropertyAddress, ',') - 1)
 FROM
   traykun-data-analyst-project-1.Housing.NashvilleHousing AS fill_address1
---for state
+-- For State
 UPDATE
   traykun-data-analyst-project-1.Housing.NashvilleHousing
 SET
@@ -69,7 +69,7 @@ SET
 FROM
   traykun-data-analyst-project-1.Housing.NashvilleHousing AS fill_address1
 
---Doing the same as above in an easier way with the OwnerAddress seperating the street, city and state
+-- Doing the same as above more easily with the OwnerAddress separating the street, city, and state
 SELECT 
   OwnerAddress, 
   SPLIT(OwnerAddress, ',')[OFFSET(0)] AS street, 
@@ -89,4 +89,3 @@ SELECT
         END AS sold_as_vacant_new
 FROM 
   traykun-data-analyst-project-1.Housing.NashvilleHousing
-
