@@ -1,4 +1,4 @@
---Covert sale date to consistent format of MM/DD/YYYY 
+--Convert sale date to consistent format of MM/DD/YYYY 
 
 SELECT
   FORMAT_DATE('%m/%d/%Y', SaleDate) AS SaleDate_MMDDYYYY
